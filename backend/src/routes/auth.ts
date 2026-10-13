@@ -11,11 +11,12 @@ import { AppError } from '../middleware/errorHandler';
 const router = Router();
 
 const COOKIE_NAME = 'ps_token';
+const isProd = env.NODE_ENV === 'production';
 const cookieOpts = {
   httpOnly: true,
-  secure: env.NODE_ENV === 'production',
-  sameSite: (env.NODE_ENV === 'production' ? 'strict' : 'lax') as 'strict' | 'lax',
-  maxAge: 8 * 60 * 60 * 1000, // 8 hours
+  secure: isProd,               // HTTPS only in production
+  sameSite: (isProd ? 'none' : 'lax') as 'none' | 'lax',  // 'none' required for cross-origin (Vercel ↔ Render)
+  maxAge: 8 * 60 * 60 * 1000,  // 8 hours
   path: '/',
 };
 
@@ -111,7 +112,7 @@ router.post('/login', authLimiter, async (req: Request, res: Response) => {
 
 // ── Logout ────────────────────────────────────────────────────────────────────
 router.post('/logout', (req: AuthRequest, res: Response) => {
-  res.clearCookie(COOKIE_NAME, { path: '/' });
+  res.clearCookie(COOKIE_NAME, { path: '/', sameSite: isProd ? 'none' : 'lax', secure: isProd });
   res.json({ message: 'Logged out' });
 });
 

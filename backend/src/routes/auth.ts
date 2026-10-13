@@ -67,6 +67,7 @@ router.post('/register', authLimiter, async (req: Request, res: Response) => {
 
   res.status(201).json({
     user: { id: user._id, name: user.name, email: user.email, role: user.role },
+    token, // returned so frontend can store in localStorage for cross-origin
   });
 });
 
@@ -107,6 +108,7 @@ router.post('/login', authLimiter, async (req: Request, res: Response) => {
 
   res.json({
     user: { id: user._id, name: user.name, email: user.email, role: user.role },
+    token, // returned so frontend can store in localStorage for cross-origin
   });
 });
 

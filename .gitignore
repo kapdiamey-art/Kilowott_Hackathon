@@ -9,6 +9,7 @@ node_modules/
 .env.*.local
 backend/.env
 frontend/.env
+# .env.production is intentionally NOT ignored — it only has the public API URL
 
 # Build outputs
 dist/

@@ -431,3 +431,5 @@ MIT — free to use, modify and distribute.
 ---
 
 *Built for the Kilowott hackathon. Made with ❤️ by Amey Kapdi.*
+
+DEPLOYED LINK: https://kilowott-hackathon-x8y3.vercel.app/
